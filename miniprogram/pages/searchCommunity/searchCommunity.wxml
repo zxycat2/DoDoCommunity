@@ -1,0 +1,14 @@
+<view class="page">
+    <view>
+        <mp-searchbar bindselectresult="selectResult" search="{{search}}" focus='true' ></mp-searchbar>
+    </view>
+</view>
+
+<!-- 弹出输入密码层 -->
+<van-popup show="{{ showPopup }}" bind:close="onClose" position='top' custom-style="height: 30%;border: 8rpx solid #437dd4" round>
+    <view class='codeSection'>
+        <view class='codeTitle'>请输入社区口令</view>
+        <input class="weui-input inputSection" password type="text" placeholder="社区口令" value='{{codeInputValue}}' bindinput='bindKeyInput'/>
+        <button type="primary" class="confirmButtton" bindtap="checkCode">确认</button>
+    </view>
+</van-popup>

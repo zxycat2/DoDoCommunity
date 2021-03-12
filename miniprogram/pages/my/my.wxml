@@ -1,0 +1,22 @@
+<!--miniprogram/pages/my.wxml-->
+
+<view class='userInfoPage'>
+  <view class='outerFrame'>
+    <view class='cellGroupFrame'>
+      <van-cell-group>
+        <van-cell title="头像" value="点击上传" is-link icon="{{avatarUrl}}" size="large" bindtap="onTapUploadeAvatar" />
+        <van-cell title="用户名" value="{{nickName}}" is-link bindtap="onTapChangeUserName"/>
+        <van-cell title="所在小区" value="{{community}}" is-link bindtap="onTapChangeCommunity"/>
+      </van-cell-group>
+    </view>
+  </view>
+</view>
+
+<!-- 更改用户名弹窗 -->
+<van-popup show="{{ showPopup }}" bind:close="onClose" position='top' custom-style="height: 30%;border: 8rpx solid #437dd4" round>
+    <view class='codeSection'>
+        <view class='codeTitle'>请输入新的用户名</view>
+        <input class="weui-input inputSection" type="text" placeholder="用户名" value='{{codeInputValue}}' bindinput='bindKeyInput'/>
+        <button type="primary" class="confirmButtton" bindtap="checkInput">确认</button>
+    </view>
+</van-popup>

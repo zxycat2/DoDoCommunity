@@ -1,0 +1,46 @@
+/* miniprogram/pages/my.wxss */
+
+.userInfoPage{
+  width: 100%;
+  height: 100%;
+}
+
+.cellGroupFrame{
+  width: 100%;
+  padding: 30rpx;
+
+}
+
+.outerFrame{
+  margin: 5%;
+
+  border: 8rpx solid #437dd4;
+  border-radius: 30rpx;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.codeSection{
+  margin: 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.codeTitle{
+  margin-top: 10rpx;
+  font-size: 40rpx;
+}
+
+.inputSection{
+  margin-top: 30rpx;
+}
+
+.confirmButtton{
+  margin-top: 40rpx;
+}

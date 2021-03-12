@@ -1,0 +1,27 @@
+/* miniprogram/pages/searchCommunity/searchCommunity.wxss */
+
+.codeSection{
+  margin: 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.codeTitle{
+  margin-top: 10rpx;
+  font-size: 40rpx;
+}
+
+.inputSection{
+  margin-top: 30rpx;
+}
+
+.confirmButtton{
+  margin-top: 40rpx;
+}
+
+
+
+
+

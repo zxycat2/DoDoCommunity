@@ -1,0 +1,41 @@
+/* miniprogram/pages/firstTimeLogin.wxss */
+
+.loginPage{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.outerFrame{
+  margin-left: 5%;
+  margin-right: 5%;
+  border: 8rpx solid #437dd4;
+  border-radius: 30rpx;
+  padding: 60rpx;
+  background-color: white;
+}
+
+.userinfo-avatar{
+  height:180rpx;
+  width: 180rpx;
+  border-radius: 50%;
+}
+
+.userName{
+  font-size: 40rpx;
+}
+
+.userButton{
+  background-color: white;
+}
+
+.selectButton{
+  margin-top: 60rpx;
+}
+
+.enterButton{
+  margin-top: 90rpx;
+}

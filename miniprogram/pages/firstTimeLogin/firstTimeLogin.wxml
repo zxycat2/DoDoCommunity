@@ -1,0 +1,16 @@
+<!--miniprogram/pages/firstTimeLogin.wxml-->
+
+<view class='loginPage'>
+  <view class='outerFrame'>
+    <button class='userButton' open-type='getUserInfo' bindgetuserinfo='onGetUserInfo'>
+    <image class="userinfo-avatar" src='{{avatarUrl}}' mode="scaleToFill"></image>
+    <view class='userName'>{{nickName}}</view>
+    </button>
+    <button type="default" class='selectButton' bindtap="selectCommunity">{{community}}</button>
+    <button  type="primary" class='enterButton' bindtap="enter">进入小程序</button>
+  </view>
+</view>
+
+
+
+
