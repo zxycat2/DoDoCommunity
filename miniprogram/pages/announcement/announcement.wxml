@@ -1,24 +1,26 @@
 <!--miniprogram/pages/announcement.wxml-->
 
 <view class='announcementPage'>
-  <view class='outerFrame'>
+  <scroll-view class='outerFrame' scroll-y='true' enable-back-to-top='true' bindscrolltolower='loadMoreData'>
 
   <view class="weui-panel weui-panel_access">
-			<view class="weui-panel__hd">文字组合列表</view>
-			<view class="weui-panel__bd">
-				<view class="weui-media-box weui-media-box_text">
-					<h4 class="weui-media-box__title">标题一</h4>
-					<view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>
-				</view>
-      </view>
-      
-			<view class="weui-panel__ft">
-				<a class="weui-cell weui-cell_active weui-cell_access weui-cell_link">
-					<view class="weui-cell__bd">查看更多</view>
-					<text class="weui-cell__ft"></text>
-				</a>
-      </view>
-      
+			<view class="weui-panel__hd">社区通知</view>
+
+			<block wx:for="{{dataArray}}" wx:for-item="entrySet" wx:for-index="dataArrayIndex">
+      	<block wx:for="{{entrySet}}" wx:for-item="entry" wx:key="{{dataArray[dataArrayIndex][entrySetindex].id}}" wx:for-index="entrySetindex">
+					<view class="weui-panel__bd">
+						<view class="weui-media-box weui-media-box_text">
+							<h4 class="weui-media-box__title">{{dataArray[dataArrayIndex][entrySetindex].title}}</h4>
+							<view class="weui-media-box__desc">{{dataArray[dataArrayIndex][entrySetindex].content}}</view>
+						</view>
+					</view>
+      	</block>
+    	</block>
+
+			
+
 		</view>
-  </view>
+
+
+  </scroll-view>
 </view>

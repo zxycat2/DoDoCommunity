@@ -2,6 +2,7 @@
   "pages": [
     "pages/announcement/announcement",
     "pages/front/front",
+    "pages/announcementDetail/announcementDetail",
     "pages/my/my",
     "pages/firstTimeLogin/firstTimeLogin",
     "pages/searchCommunity/searchCommunity",

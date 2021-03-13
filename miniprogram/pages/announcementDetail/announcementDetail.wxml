@@ -1,0 +1,14 @@
+<!--miniprogram/pages/announcementDetail.wxml-->
+
+<view class="announcementDetailPage">
+  <scroll-view class="outerFrame" scroll-y="true" enable-flex="true">
+    
+    <view class="title">{{title}}</view>
+    <view class="time">{{time}}</view>
+    <view class="content">{{content}}</view>
+    <view class="photoFrame">
+      <image src="{{imgSrc}}" mode="aspectFit" class="photo" bindtap="preview"></image>
+    </view>
+
+  </scroll-view>
+</view>
