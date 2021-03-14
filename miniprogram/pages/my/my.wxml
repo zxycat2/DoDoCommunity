@@ -3,13 +3,24 @@
 <view class='userInfoPage'>
   <view class='outerFrame'>
     <view class='cellGroupFrame'>
-      <van-cell-group>
+      <van-cell-group title='用户信息'>
         <van-cell title="头像" value="点击上传" is-link icon="{{avatarUrl}}" size="large" bindtap="onTapUploadeAvatar" />
-        <van-cell title="用户名" value="{{nickName}}" is-link bindtap="onTapChangeUserName"/>
-        <van-cell title="所在小区" value="{{community}}" is-link bindtap="onTapChangeCommunity"/>
+        <van-cell title="用户名" value="{{nickName}}" is-link size="large" bindtap="onTapChangeUserName"/>
+        <van-cell title="所在小区" value="{{community}}" is-link size="large" bindtap="onTapChangeCommunity"/>
       </van-cell-group>
     </view>
   </view>
+
+  <view class='outerFrame' hidden="{{hideAdminMenu}}">
+    <view class='cellGroupFrame'>
+      <van-cell-group title='管理员选项'>
+        <van-cell title="发布新通知" is-link size="large" bindtap="onTapAddAnnouncement"/>
+      </van-cell-group>
+    </view>
+  </view>
+
+
+
 </view>
 
 <!-- 更改用户名弹窗 -->

@@ -11,7 +11,7 @@ exports.main = async (event, context) => {
 
   var add_result = {}
 
-  if (event.community && event.content && event.title && event.imgSrc){
+  if (event.community && event.content && event.title){
     // 构造要添加的数据
     to_add_data = {
       title: event.title,

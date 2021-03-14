@@ -5,8 +5,8 @@
     
     <view class="title">{{title}}</view>
     <view class="time">{{time}}</view>
-    <view class="content">{{content}}</view>
-    <view class="photoFrame">
+    <text class="content" space="emsp" user-select="true" >{{content}}</text>
+    <view class="photoFrame" hidden="{{showPhoto}}">
       <image src="{{imgSrc}}" mode="aspectFit" class="photo" bindtap="preview"></image>
     </view>
 

@@ -17,7 +17,8 @@ App({
 
     this.globalData = {
       userInfo: null,
-      userInfoUpdated: false
+      userInfoUpdated: false,
+      announcementUpdated: false
     }
   }
 })

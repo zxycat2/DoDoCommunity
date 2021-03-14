@@ -7,22 +7,84 @@ Page({
    * 页面的初始数据
    */
   data: {
-    community: '渡渡鸟社区1',
+    community: '',
     allAnnouncement: [],
 
-    dataArray: []
+    dataArray: [],
+    refreshing: false
+  },
+  //点击进入详情
+  tapEntry(event){
+    var that = this
+    console.log(event.currentTarget.dataset)
+    var dataArrayIndex = event.currentTarget.dataset.dataarrayindex
+    var entrySetIndex = event.currentTarget.dataset.entrysetindex
+    var detailData = that.data.dataArray[dataArrayIndex][entrySetIndex]
+    wx.navigateTo({
+      url: '../announcementDetail/announcementDetail',
+      success: res => {
+        res.eventChannel.emit(
+          'detailData', {data: detailData}
+        )
+      }
+    })
+
   },
 
-
-
   //分页加载相关，一次加载十条数据
+
+  //下拉刷新
+  onRefresh(){
+    var that = this
+    //重新下载全局变量
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.cloud.callFunction({
+      name: 'getAnnouncement',
+      data: {
+        community: that.data.community
+      },
+      success: res => {
+        console.log(res)
+        if (res.result.errCode == 0) {
+          console.log(res.result)
+          app.globalData.allAnnouncement = res.result.data
+        } else if(res.result.errCode == 1) {
+          wx.showModal({
+            title: '暂时还没有通知哦',
+            confirmText: "我知道了",
+            showCancel: false,
+          })
+        }
+      },
+      fail: err => {
+        console.error('[云函数] [wechat_sign] 调用失败', err)
+        wx.showModal({
+          title: '调用失败',
+          content: '请检查云函数是否已部署',
+          showCancel: false,
+        })
+      },
+      complete: err => {
+        wx.hideLoading({
+          success: (res) => {},
+        })
+      }
+    })
+    that.onLoad()
+    that.setData({
+      refreshing: false
+    })
+  },
+
   //截取allAccouncement
   getSlicedData(currentPage){
     var that = this
     var result = []
     var start = currentPage * 10
     var end = (currentPage * 10) + 10
-    result = that.data.allAnnouncement.slice(start, end)
+    result = app.globalData.allAnnouncement.slice(start, end)
     console.log('开始执行切片')
     console.log('currentPage', currentPage)
     console.log('start', start)
@@ -84,50 +146,16 @@ Page({
     
   },
 
+  
+
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var that = this
-    //从全局变量获取community
-    // that.data.community = app.globalData.userInfo.community
-    //加载全部（上限100）通知，保存到本地
-    wx.showLoading({
-      title: '正在加载',
-    })
-    wx.cloud.callFunction({
-      name: 'getAnnouncement',
-      data: {
-        community: that.data.community
-      },
-      success: res => {
-        console.log(res)
-        if (res.result.errCode == 0) {
-          console.log(res.result)
-          that.data.allAnnouncement = res.result.data
-        } else if(res.result.errCode == 1) {
-          wx.showModal({
-            title: '暂时还没有通知哦',
-            confirmText: "我知道了",
-            showCancel: false,
-          })
-        }
-      },
-      fail: err => {
-        console.error('[云函数] [wechat_sign] 调用失败', err)
-        wx.showModal({
-          title: '调用失败',
-          content: '请检查云函数是否已部署',
-          showCancel: false,
-        })
-      },
-      complete: err => {
-        wx.hideLoading({
-          success: (res) => {},
-        })
-        that.loadInitData()
-      }
-    })
+    that.data.community = app.globalData.userInfo.community
+    that.loadInitData()
   },
 
   /**
@@ -141,7 +169,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (app.globalData.announcementUpdated == true){
+      app.globalData.announcementUpdated = false
+      that.onLoad()
+    }
   },
 
   /**

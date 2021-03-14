@@ -1,0 +1,23 @@
+<!--miniprogram/pages/addAnnouncement.wxml-->
+
+<view class="addAnnouncementDetailPage">
+  <scroll-view class="outerFrame" scroll-y="true" enable-flex="true">
+    
+    <view class="line-block">
+      <view class="line-txt">标题：</view>
+      <input class="line-select" bindinput="bindKeyInputTitle" />
+    </view>
+
+    <textarea placeholder="公告正文..." placeholder-style="color: #949494" class="content" bindinput="bindTextAreaInputContent" maxlength='-1'> </textarea>
+
+    <view class="line-block" style="flex-direction:column;">
+      <view class="upload-txt" bindtap="doUpload">上传图片（可选）</view>
+      <image class="upload-image" mode='widthFix' wx:if="{{isShowPic}}" src="{{imgSrc}}"></image>
+    </view>
+
+    <view class="line-button">
+      <button class="submit" bindtap="submitClick">发布公告</button>
+    </view>
+
+  </scroll-view>
+</view>

@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/announcement/announcement",
     "pages/front/front",
+    "pages/addAnnouncement/addAnnouncement",
+    "pages/announcement/announcement",
     "pages/announcementDetail/announcementDetail",
     "pages/my/my",
     "pages/firstTimeLogin/firstTimeLogin",

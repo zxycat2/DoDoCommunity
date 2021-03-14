@@ -15,7 +15,9 @@ Page({
     newUserNameInputValue: '',
     showPopup: false,
 
-    newAvatarUrl: null
+    newAvatarUrl: null,
+
+    hideAdminMenu: true
   },
   //更改社区
   onTapChangeCommunity (e) {
@@ -205,6 +207,14 @@ Page({
       }
     })
   },
+
+  onTapAddAnnouncement(){
+    wx.navigateTo({
+      url: '../addAnnouncement/addAnnouncement',
+    })
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -218,6 +228,11 @@ Page({
       community: app.globalData.userInfo.community,
       is_admin: app.globalData.userInfo.is_admin
     })
+    if (that.data.is_admin ==  true){
+      that.setData({
+        hideAdminMenu: false
+      })
+    }
   },
 
   /**
