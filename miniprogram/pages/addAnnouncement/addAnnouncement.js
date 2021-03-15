@@ -41,7 +41,7 @@ Page({
           const filePath = res.tempFilePaths[0]
           // 上传图片
           var timestamp = new Date().getTime()
-          const cloudPath = that.data.community + '/' + timestamp + filePath.match(/\.[^.]+?$/)[0]
+          const cloudPath = that.data.community + '/公告/' + timestamp + filePath.match(/\.[^.]+?$/)[0]
           that.setData({
             isShowPic: false,
           })

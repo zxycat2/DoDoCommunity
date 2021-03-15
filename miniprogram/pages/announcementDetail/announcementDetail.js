@@ -81,6 +81,13 @@ Page({
             },
             success: res => {
               if (res.result.errNumber == 0) {
+                wx.cloud.deleteFile({
+                  fileList: [that.data.imgSrc],
+                  success: res => {
+                    console.log('删除公告中的图片')
+                  },
+                  fail: console.error
+                })
                 console.log('云数据库删除公告成功')
                 app.globalData.announcementUpdated = true
                 wx.showToast({
