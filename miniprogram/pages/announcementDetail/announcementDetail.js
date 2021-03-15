@@ -1,5 +1,6 @@
 // miniprogram/pages/announcementDetail.js
 const util = require('../../utils/util');
+const app = getApp()
 
 Page({
 
@@ -11,6 +12,10 @@ Page({
     time: 'time',
     content: '内容',
     imgSrc: '',
+    _id: '',
+
+    is_admin: false,
+    hideDeleteButton: true,
 
     hidePhoto: false
   },
@@ -30,6 +35,13 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    that.data.is_admin = app.globalData.userInfo.is_admin
+    console.log(that.data.is_admin)
+    if (that.data.is_admin == true){
+      that.setData({
+        hideDeleteButton: false
+      })
+    }
     const eventChannel = this.getOpenerEventChannel()
     // 监听detailData事件，获取上一页面通过eventChannel传送到当前页面的数据
     eventChannel.on('detailData', function(data) {
@@ -38,13 +50,72 @@ Page({
           //格式化显示日期
           time: util.formatDate(new Date(data.data.time), 'yyyy-mm-dd hh:mi:ss'),
           content: data.data.content,
-          imgSrc: data.data.imgSrc
+          imgSrc: data.data.imgSrc,
+          _id: data.data._id
         })
         if (that.data.imgSrc == ''){
           that.setData({
             showPhoto: true
           })
         }
+    })
+    
+  },
+
+  onTapDelete(){
+    var that = this
+    wx.showModal({
+      title: '您确定要删除该公告吗？',
+      content: '公告将会被永久删除',
+      success (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          wx.showLoading({
+            title: '正在删除',
+          })
+          console.log(that.data)
+          wx.cloud.callFunction({
+            name: 'deleteAnnouncement',
+            data: {
+              _id: that.data._id
+            },
+            success: res => {
+              if (res.result.errNumber == 0) {
+                console.log('云数据库删除公告成功')
+                app.globalData.announcementUpdated = true
+                wx.showToast({
+                  title: '删除成功',
+                })
+                wx.navigateBack()
+              } else if(res.result.errCode == 1) {
+                wx.showModal({
+                  title: '云数据库删除公告失败',
+                  content: '请重试',
+                  confirmText: "好的",
+                  showCancel: false,
+                })
+              }
+            },
+            fail: err => {
+              console.error('[云函数] [wechat_sign] 调用失败', err)
+              wx.showModal({
+                title: '调用失败',
+                content: '请检查云函数是否已部署',
+                showCancel: false,
+              })
+            },
+            complete: err => {
+              console.log(err)
+              wx.hideLoading({
+                success: (res) => {},
+              })
+            }
+          })
+
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
     })
     
   },

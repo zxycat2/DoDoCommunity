@@ -9,6 +9,7 @@
     <view class="photoFrame" hidden="{{showPhoto}}">
       <image src="{{imgSrc}}" mode="aspectFit" class="photo" bindtap="preview"></image>
     </view>
+    <button type="warn" class="deleteButton" hidden="{{hideDeleteButton}}" bindtap="onTapDelete">删除此公告</button>
 
   </scroll-view>
 </view>

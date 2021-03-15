@@ -43,3 +43,8 @@
 .photoFrame{
   margin-top: 3%;
 }
+
+.deleteButton{
+  margin-top: 5%;
+  flex-shrink: 0;
+}
