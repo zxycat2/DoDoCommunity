@@ -1,15 +1,53 @@
 // miniprogram/pages/addVote.js
+const app = getApp()
+const util = require('../../utils/util')
+
 Page({
 
 
   data: {
     optionLists: ['', ''],
 
-    community: '',
+    community: '渡渡鸟社区1',
 
     title: '',
     content: '',
-    imgSrc: ''
+    imgSrc: '',
+    single: true,
+
+    endDate: '',
+
+  },
+
+  bindDateChange: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var endTime = new Date(e.detail.value + ' 23:59:59').getTime() / 1000 - parseInt(new Date().getTime() / 1000);
+    var timeDay = parseInt(endTime / 60 / 60 / 24);        //相差天数
+    console.log('相差几天：', timeDay)
+    if (timeDay >= 1){
+      console.log('合法日期')
+      this.setData({
+        endDate: e.detail.value
+      })
+    }else{
+      console.log('非法日期')
+      wx.showModal({
+        title: '提示',
+        content: '结束日期不能早于明天哦',
+        confirmText: "我知道了",
+        showCancel: false,
+      })
+    }
+  },
+
+
+  onSwitchChange(e){
+    var that = this
+    var current = that.data.single
+    that.setData({
+      single: !current
+    })
+    console.log(that.data.single)
   },
 
 
@@ -109,21 +147,104 @@ Page({
 
   submitClick(){
     var that = this
-    console.log(that.data)
+    var opStatus = that.checkOptionsNotNull()
+    if (that.data.title != '' && opStatus != false){
+      console.log('submit')
+      //上传前把options从数组加工成对象
+      var finalOptionList = {}
+      for (var key of that.data.optionLists){
+        finalOptionList[key] = 0
+      }
+      wx.showLoading({
+        title: '正在上传数据',
+      })
+      console.log(that.data)
+      wx.cloud.callFunction({
+        name: 'addVote',
+        data: {
+          title: that.data.title,
+          description: that.data.description,
+          imgSrc: that.data.imgSrc,
+          community: that.data.community,
+          options: finalOptionList,
+          single: that.data.single,
+          endDate: that.data.endDate
+        },
+        success: res => {
+          if (res.result.errNumber == 0) {
+            console.log('云数据库新增公告成功')
+            app.globalData.voteUpdated = true
+            wx.showToast({
+              title: '上传成功',
+            })
+            wx.navigateBack()
+          } else if(res.result.errCode == 1) {
+            wx.showModal({
+              title: '云数据库新增公告失败',
+              content: '请重试',
+              confirmText: "好的",
+              showCancel: false,
+            })
+          }
+        },
+        fail: err => {
+          console.error('[云函数] [wechat_sign] 调用失败', err)
+          wx.showModal({
+            title: '调用失败',
+            content: '请检查云函数是否已部署',
+            showCancel: false,
+          })
+        },
+        complete: err => {
+          console.log(err)
+          wx.hideLoading({
+            success: (res) => {},
+          })
+        }
+      })
+    }else{
+      wx.showModal({
+        title: '还差一步',
+        content: '标题与选项内容不能为空,且至少有两个选项',
+        confirmText: "我知道了",
+        showCancel: false,
+      })
+    }
+
+  },
+
+  checkOptionsNotNull(){
+    var that = this
+    if (that.data.optionLists.length >= 2){
+      for (var key of that.data.optionLists){
+        if (key == ''){
+          return false
+        }
+      }
+      return true
+    }else{
+      return false
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that = this
+    that.data.community = app.globalData.userInfo.community
+    var dateTime = new Date()
+    dateTime=dateTime.setDate(dateTime.getDate()+7);
+    dateTime=new Date(dateTime);
+    that.setData({
+      endDate: util.formatDate(dateTime, 'yyyy-mm-dd')
+    })
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**
@@ -168,3 +289,4 @@ Page({
 
   }
 })
+

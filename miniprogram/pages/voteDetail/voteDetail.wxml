@@ -1,0 +1,44 @@
+<!--miniprogram/pages/voteDetail.wxml-->
+
+<view class="announcementDetailPage">
+  <scroll-view class="outerFrame" scroll-y="true" enable-flex="true">
+    
+    <view class="title">{{title}}</view>
+    <view class="time">发布时间：{{time}}</view>
+    <view class="endDate">结束日期：{{endDate}}</view>
+    <text class="description" space="emsp" user-select="true" >{{description}}</text>
+    <view class="photoFrame" hidden="{{showPhoto}}">
+      <image src="{{imgSrc}}" mode="aspectFit" class="photo" bindtap="preview"></image>
+    </view>
+
+    <view class="optionSection">
+      <van-checkbox-group value="{{ optionResult }}" bind:change="onChange" max="{{ max }}" >
+  <van-cell-group>
+    <van-cell title="形式" value="{{form}}" />
+    <van-cell
+      wx:for="{{ optionList }}"
+      wx:key="index"
+      title="{{ item }}"
+      value-class="value-class"
+      clickable
+      data-index="{{ index }}"
+      bind:click="toggle"
+    >
+      <van-checkbox
+        catch:tap="noop"
+        class="checkboxes-{{ index }}"
+        name="{{ item }}"
+      />
+    </van-cell>
+  </van-cell-group>
+</van-checkbox-group>
+    </view>
+
+    <view class="line-button">
+      <button class="submit" bindtap="submitClick">提交</button>
+    </view>
+
+    <button type="warn" class="deleteButton" hidden="{{hideDeleteButton}}" bindtap="onTapDelete">删除此公告</button>
+
+  </scroll-view>
+</view>

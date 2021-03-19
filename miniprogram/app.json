@@ -1,8 +1,9 @@
 {
   "pages": [
-    "pages/front/front",
+    "pages/voteDetail/voteDetail",
     "pages/addVote/addVote",
-    
+    "pages/vote/vote",
+    "pages/front/front",
     "pages/addAnnouncement/addAnnouncement",
     "pages/announcement/announcement",
     "pages/announcementDetail/announcementDetail",
@@ -52,6 +53,10 @@
     "van-popup": "./vant-ui/dist/popup/index",
     "van-cell": "./vant-ui/dist/cell/index",
     "van-cell-group": "./vant-ui/dist/cell-group/index",
-    "van-icon": "./vant-ui/dist/icon/index"
+    "van-icon": "./vant-ui/dist/icon/index",
+    "van-checkbox": "./vant-ui/dist/checkbox/index",
+    "van-checkbox-group": "./vant-ui/dist/checkbox-group/index",
+    "van-datetime-picker": "./vant-ui/dist/datetime-picker/index"
+
   }
 }

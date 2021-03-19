@@ -127,6 +127,7 @@
 }
 
 
+
 .optionInput{
   display: flex;
   flex-direction: row;
@@ -178,4 +179,61 @@ input {
 
 /* 
 -------------------------- */
+
+.endDateAndSwitch{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.endDateSection{
+  width: 70%;
+  margin-top: 30rpx;
+  margin-right: 5%;
+  background-color: #eaf0fb;
+  border-radius: 20rpx;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: left;
+
+  padding: 3%;
+}
+
+.swicthSection{
+  margin-top: 5%;
+  padding: 5%;
+  width: 20%;
+  border-radius: 20rpx;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  color: #808080;
+
+  background-color: #eaf0fb;
+}
+
+.pickerSection{
+  background-color: white;
+  border-radius: 20rpx;
+  font-size: 30rpx;
+  padding: 20rpx;
+
+  color: black
+}
+
+.pickerSectionsection__title{
+  color: #808080;
+}
+
+
 
