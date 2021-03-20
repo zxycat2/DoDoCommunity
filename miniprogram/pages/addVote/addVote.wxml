@@ -54,6 +54,15 @@
     </view>
   </view>
 
+  <view class="swicthSection">
+      <view class="section section_gap">
+            <view class="section__title">匿名</view>
+            <view class="body-view">
+                <switch checked="{{anonymous}}" bindchange="onAnonymousSwitchChange"/>
+            </view>
+      </view>
+    </view>
+
 
 
     

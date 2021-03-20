@@ -10,8 +10,10 @@
     <view class="photoFrame" hidden="{{showPhoto}}">
       <image src="{{imgSrc}}" mode="aspectFit" class="photo" bindtap="preview"></image>
     </view>
+    <view class="creator">作者：{{creator}}</view>
 
-    <view class="optionSection">
+    <view class="beforeVoted">
+      <view class="optionSection">
       <van-checkbox-group value="{{ optionResult }}" bind:change="onChange" max="{{ max }}" >
   <van-cell-group>
     <van-cell title="形式" value="{{form}}" />
@@ -37,8 +39,20 @@
     <view class="line-button">
       <button class="submit" bindtap="submitClick">提交</button>
     </view>
+    </view>
+
+    <view class="afterVoted" wx:for="{{votePercentage}}">
+      <view class="progressText">{{item.option}}  票数：{{item.voteCount}}</view>
+      <van-progress
+        percentage="{{item.percentage}}"
+        pivot-text="{{item.percentage}}%"
+        pivot-color="#7232dd"
+        color="linear-gradient(to right, #be99ff, #7232dd)"
+        />
+    </view>
 
     <button type="warn" class="deleteButton" hidden="{{hideDeleteButton}}" bindtap="onTapDelete">删除此公告</button>
 
   </scroll-view>
 </view>
+

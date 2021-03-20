@@ -56,7 +56,7 @@
     "van-icon": "./vant-ui/dist/icon/index",
     "van-checkbox": "./vant-ui/dist/checkbox/index",
     "van-checkbox-group": "./vant-ui/dist/checkbox-group/index",
-    "van-datetime-picker": "./vant-ui/dist/datetime-picker/index"
-
+    "van-datetime-picker": "./vant-ui/dist/datetime-picker/index",
+    "van-progress": "./vant-ui/dist/progress/index"
   }
 }

@@ -41,6 +41,10 @@
 
 }
 
+.creator{
+  margin-top: 20rpx;
+}
+
 .description{
   font-size: 35rpx;
   margin-top: 20rpx;
@@ -79,4 +83,13 @@
   margin-left:5%;
   margin-right:5%;
   padding:0rpx;
+}
+
+.afterVoted{
+  width: 90%;
+}
+
+.progressText{
+  margin-bottom: 20rpx;
+  margin-top: 20rpx;
 }

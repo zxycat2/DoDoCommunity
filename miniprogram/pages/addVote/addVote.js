@@ -9,6 +9,7 @@ Page({
     optionLists: ['', ''],
 
     community: '渡渡鸟社区1',
+    nickName: '',
 
     title: '',
     content: '',
@@ -16,6 +17,9 @@ Page({
     single: true,
 
     endDate: '',
+
+    anonymous: false,
+    creator: ''
 
   },
 
@@ -48,6 +52,15 @@ Page({
       single: !current
     })
     console.log(that.data.single)
+  },
+
+  onAnonymousSwitchChange(){
+    var that = this
+    var current = that.data.anonymous
+    that.setData({
+      anonymous: !current
+    })
+    console.log(that.data.anonymous)
   },
 
 
@@ -155,6 +168,10 @@ Page({
       for (var key of that.data.optionLists){
         finalOptionList[key] = 0
       }
+      //判断是否要匿名
+      if (that.data.anonymous == false){
+        that.data.creator = that.data.nickName
+      }
       wx.showLoading({
         title: '正在上传数据',
       })
@@ -168,7 +185,8 @@ Page({
           community: that.data.community,
           options: finalOptionList,
           single: that.data.single,
-          endDate: that.data.endDate
+          endDate: that.data.endDate,
+          creator: that.data.creator
         },
         success: res => {
           if (res.result.errNumber == 0) {
@@ -233,6 +251,7 @@ Page({
   onLoad: function (options) {
     var that = this
     that.data.community = app.globalData.userInfo.community
+    that.date.nickName = app.globalData.userInfo.nickName
     var dateTime = new Date()
     dateTime=dateTime.setDate(dateTime.getDate()+7);
     dateTime=new Date(dateTime);
