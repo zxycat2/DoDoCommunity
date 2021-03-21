@@ -12,7 +12,7 @@
     </view>
     <view class="creator">作者：{{creator}}</view>
 
-    <view class="beforeVoted">
+    <view class="beforeVoted" hidden="{{hideOptionSelect}}">
       <view class="optionSection">
       <van-checkbox-group value="{{ optionResult }}" bind:change="onChange" max="{{ max }}" >
   <van-cell-group>
@@ -41,9 +41,9 @@
     </view>
     </view>
 
-    <view class="afterVoted" wx:for="{{votePercentage}}">
+    <view class="afterVoted" wx:for="{{votePercentage}}" hidden="{{hideVoteResult}}">
       <view class="progressText">{{item.option}}  票数：{{item.voteCount}}</view>
-      <van-progress
+      <van-progress class="progressBar"
         percentage="{{item.percentage}}"
         pivot-text="{{item.percentage}}%"
         pivot-color="#7232dd"

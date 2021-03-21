@@ -10,7 +10,7 @@ Page({
   data: {
     title: '标题',
     time: 'time',
-    endDate: '结束日期',
+    endDate: '2021-3-11',
     description: '描述',
     imgSrc: 'cloud://mydemoenv-2goh570e58b7ae8e.6d79-mydemoenv-2goh570e58b7ae8e-1304794433/渡渡鸟社区1/投票/1616138585963.jpg',
     _id: '',
@@ -36,6 +36,9 @@ Page({
     votePercentage: [],
     // [{option: '选项1', percentage: 20, voteCount: 2},{option: '选项2', percentage: 30, voteCount: 3}, {option: '选项3', percentage: 10, voteCount: 1}]
 
+    hideOptionSelect: false,
+    hideVoteResult: true
+
   },
 
   //图片预览
@@ -52,37 +55,38 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    // that.data.openid = app.globalData.userInfo.openid
+    var that = this 
+    that.data.openid = app.globalData.userInfo.openid
     // 检验是否是管理员，决定是否隐藏删除按钮
-    // that.data.is_admin = app.globalData.userInfo.is_admin
-    // console.log(that.data.is_admin)
-    // if (that.data.is_admin == true){
-    //   that.setData({
-    //     hideDeleteButton: false
-    //   })
-    // }
+    that.data.is_admin = app.globalData.userInfo.is_admin
+    console.log(that.data.is_admin)
+    if (that.data.is_admin == true){
+      that.setData({
+        hideDeleteButton: false
+      })
+    }
     const eventChannel = this.getOpenerEventChannel()
     // 监听detailData事件，获取上一页面通过eventChannel传送到当前页面的数据
-    // eventChannel.on('detailData', function(data) {
-    //     that.setData({
-    //       title: data.data.title,
-    //       //格式化显示日期
-    //       time: util.formatDate(new Date(data.data.time), 'yyyy-mm-dd hh:mi:ss'),
-    //       endDate: data.data.endDate,
-    //       description: data.data.description,
-    //       imgSrc: data.data.imgSrc,
-    //       _id: data.data._id,
-    //       options: data.data.options,
-    //       single: data.data.single,
-    //       votedUser: data.data.votedUser
-    //     })
-    //     if (that.data.imgSrc == ''){
-    //       that.setData({
-    //         showPhoto: true
-    //       })
-    //     }
-    // })
+    eventChannel.on('detailData', function(data) {
+        that.setData({
+          title: data.data.title,
+          //格式化显示日期
+          time: util.formatDate(new Date(data.data.time), 'yyyy-mm-dd hh:mi:ss'),
+          endDate: data.data.endDate,
+          description: data.data.description,
+          imgSrc: data.data.imgSrc,
+          _id: data.data._id,
+          options: data.data.options,
+          single: data.data.single,
+          votedUser: data.data.votedUser,
+          creator: data.data.creator
+        })
+        if (that.data.imgSrc == ''){
+          that.setData({
+            showPhoto: true
+          })
+        }
+    })
     //把对象形式的options转换为列表，于前端展示
     var optionList = []
     for (var key in that.data.options){
@@ -104,27 +108,55 @@ Page({
         max: that.data.optionList.length
       })
     }
-    //是否为匿名
-    if (that.data.creator == ''){
-      that.setData({
-        creator: '匿名'
-      })
-    }
+    that.calculatePercentage()
+    that.changPageLayout()
+  },
+
+  calculatePercentage(){
     //展示投票结果
     //计算百分比
+    var that = this
     var allVoteCount = 0
-    for (key in that.data.options){
+    for (var key in that.data.options){
       allVoteCount += that.data.options[key]
     }
     console.log("allVoteCount", allVoteCount)
     var newVotePercentage = []
-    for (key in that.data.options){
+    for (var key in that.data.options){
       var item = {option: key, voteCount: that.data.options[key], percentage: parseInt((that.data.options[key] / allVoteCount)*100)}
       newVotePercentage.push(item)
     }
     that.setData({
       votePercentage: newVotePercentage
     })
+  },
+
+  changPageLayout(){
+    var that = this
+    //检测是show结果还是选项
+    var endTime = new Date(that.data.endDate + ' 23:59:59').getTime() / 1000 - parseInt(new Date().getTime() / 1000);
+    var timeDay = parseInt(endTime / 60 / 60 / 24);        //相差天数
+    var voteEnded = false
+    var userHaveVoted = false
+    if (timeDay >= 0){
+      console.log('投票还没结束')
+      voteEnded = false
+    }else{
+      console.log('投票结束')
+      voteEnded = true
+    }
+    for (var key in that.data.votedUser){
+      if (that.data.votedUser[key] == that.data.openid){
+        userHaveVoted = true
+        break
+      }
+    }
+    if (voteEnded == true || userHaveVoted == true){
+      that.setData({
+        hideOptionSelect: true,
+        hideVoteResult: false
+      })
+    }
   },
 
   onChange(event) {
@@ -168,7 +200,7 @@ Page({
                   fail: console.error
                 })
                 console.log('云数据库删除投票成功')
-                app.globalData.announcementUpdated = true
+                app.globalData.voteUpdated = true
                 wx.showToast({
                   title: '删除成功',
                 })
@@ -226,7 +258,7 @@ Page({
             for (var key in that.data.optionResult ){
               that.data.options[that.data.optionResult[key]] = that.data.options[that.data.optionResult[key]] + 1
             }
-            console.log(that.data)
+            console.log('构造数据：', that.data)
             //云函数更新
             wx.showLoading({
               title: '正在上传数据',
@@ -242,6 +274,9 @@ Page({
                 if (res.result.errNumber == 0) {
                   console.log('云数据库更新成功')
                   app.globalData.voteUpdated = true
+                  wx.navigateBack({
+                    delta: 0,
+                  })
                 } else if(res.result.errCode == 1) {
                   wx.showModal({
                     title: '云数据库更新失败',
@@ -263,6 +298,7 @@ Page({
                 })
               },
               complete: err => {
+                console.log('complete')
                 wx.hideLoading({
                   success: (res) => {},
                 })
@@ -339,3 +375,5 @@ Page({
 
   }
 })
+
+

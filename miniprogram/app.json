@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/front/front",
     "pages/voteDetail/voteDetail",
     "pages/addVote/addVote",
     "pages/vote/vote",
-    "pages/front/front",
     "pages/addAnnouncement/addAnnouncement",
     "pages/announcement/announcement",
     "pages/announcementDetail/announcementDetail",

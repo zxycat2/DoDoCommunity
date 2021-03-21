@@ -8,18 +8,18 @@ Page({
   data: {
     optionLists: ['', ''],
 
-    community: '渡渡鸟社区1',
+    community: '',
     nickName: '',
 
     title: '',
-    content: '',
+    description: '',
     imgSrc: '',
     single: true,
 
     endDate: '',
 
     anonymous: false,
-    creator: ''
+    creator: '匿名'
 
   },
 
@@ -105,7 +105,7 @@ Page({
 
   bindTextAreaInputDescription: function(e) {
     this.setData({
-      content: e.detail.value
+      description: e.detail.value
     })
   },
 
@@ -171,6 +171,7 @@ Page({
       //判断是否要匿名
       if (that.data.anonymous == false){
         that.data.creator = that.data.nickName
+        console.log('不匿名', that.data.creator)
       }
       wx.showLoading({
         title: '正在上传数据',
@@ -250,8 +251,9 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    console.log(app.globalData.userInfo)
+    that.data.nickName = app.globalData.userInfo.nickName
     that.data.community = app.globalData.userInfo.community
-    that.date.nickName = app.globalData.userInfo.nickName
     var dateTime = new Date()
     dateTime=dateTime.setDate(dateTime.getDate()+7);
     dateTime=new Date(dateTime);

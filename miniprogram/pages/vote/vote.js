@@ -40,6 +40,7 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
+    that.data.allVote = []
     wx.cloud.callFunction({
       name: 'getVote',
       data: {
@@ -161,7 +162,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    // that.data.community = app.globalData.userInfo.community
+    that.data.community = app.globalData.userInfo.community
     that.onRefresh()
   },
 
