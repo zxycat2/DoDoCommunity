@@ -1,6 +1,8 @@
 {
   "pages": [
+    "pages/editContact/editContact",
     "pages/front/front",
+    "pages/contact/contact",
     "pages/voteDetail/voteDetail",
     "pages/addVote/addVote",
     "pages/vote/vote",

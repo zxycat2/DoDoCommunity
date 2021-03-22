@@ -9,7 +9,7 @@ Page({
   data: {
     functions: [
       {icon:'../../images/stas.png', path:'/pages/vote/vote', name:'社区投票'},
-      {icon:'../../images/phone.png', path:'/pages/searchCommunity/searchCommunity', name:'常用联系'},
+      {icon:'../../images/phone.png', path:'/pages/contact/contact', name:'常用联系'},
       {icon:'../../images/file.png', path:'/pages/searchCommunity/searchCommunity', name:'设备报修'},
       {icon:'../../images/mail.png', path:'/pages/searchCommunity/searchCommunity', name:'意见反馈'}
     ],

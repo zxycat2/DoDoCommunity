@@ -21,6 +21,7 @@ Page({
   },
   //更改社区
   onTapChangeCommunity (e) {
+    app.globalData.announcementUpdated = true
     wx.navigateTo({
       url: '../searchCommunity/searchCommunity',
       success: function(res) {

@@ -1,0 +1,19 @@
+<view class='contactPage'>
+
+  <view class='outerFrame'>
+
+    <view class='cellGroupFrame'>
+      <van-cell-group title='常用联系 点击一键拨号'>
+        <view wx:for="{{contactObj}}" wx:for-index="key" wx:for-item="value">
+          <van-cell title="{{key}}" value="{{value}}" is-link size="large" data-contactName="{{key}}" bindtap="onTapContact"/>
+        </view>
+      </van-cell-group>
+    </view>
+
+  </view>
+
+  <view class="editSection" hidden="{{hideEditButton}}">
+    <button class="editButton" bindtap="editContact">编辑</button>
+  </view>
+
+</view>

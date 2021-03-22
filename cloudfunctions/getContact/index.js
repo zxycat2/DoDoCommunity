@@ -8,20 +8,18 @@ exports.main = async (event, context) => {
 
   // 实例化数据库
   const db = cloud.database()
-
   var result = {}
-  await db.collection('announcement')
+  await db.collection('community')
   .where({
-    community: event.community
+    name: event.community
   })
-  .limit(100)
   .get()
   .then(res => {
     console.log('已完成搜索')
     console.log(res.data)
-    result.data = res.data
+    result.data = res.data[0].contact
 
-    if (result.data.length == 0){
+    if (result.data == undefined){
       result.errCode = 1
       result.errMsg = '未找到结果'
     }else{

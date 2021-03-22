@@ -1,0 +1,29 @@
+.contactPage{
+  width: 100%;
+  height: 100%;
+}
+
+.cellGroupFrame{
+  width: 100%;
+  padding: 30rpx;
+
+}
+
+.outerFrame{
+  margin: 5%;
+
+  border: 8rpx solid #437dd4;
+  border-radius: 30rpx;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.editButton{
+  background-color: #437dd4;
+  color: white;
+  font-size: 33rpx;
+}

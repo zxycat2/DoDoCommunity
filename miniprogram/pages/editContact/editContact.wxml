@@ -1,0 +1,28 @@
+<view class='editContactPage'>
+
+  <view class='outerFrame'>
+
+    <view class="optionsSection">
+
+    <block wx:for="{{contactList}}" wx:for-index="key" wx:for-item="value">
+      <view class='optionInput'>
+        <view class="clearButton" data-index='{{key}}' bindtap='onTapClear'>
+          <van-icon name="clear" size="35rpx"/>
+        </view>
+      <input placeholder='名称' class="nameInputSection" data-index='{{key}}' bindinput='onNameInput' value="{{value.name}}"> </input>
+      <input placeholder='号码' class="numberInputSection" data-index='{{key}}' bindinput='onNumberInput' value="{{value.number}}"></input>
+      </view>
+    </block>
+
+    <view class="addSection" bindtap="addOption">
+      <van-icon name="add" size="30rpx"/>
+      <view>添加选项</view>
+    </view>
+
+  </view>
+
+
+  </view>
+
+
+</view>
