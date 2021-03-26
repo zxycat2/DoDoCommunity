@@ -10,7 +10,8 @@ Page({
     community: '',
     is_admin: false,
     hideEditButton: true,
-    contactObj: {}
+    contactObj: {},
+    _id: ''
   },
 
   onTapContact(e){
@@ -19,6 +20,19 @@ Page({
     console.log(number)
     wx.makePhoneCall({
       phoneNumber: number,
+    })
+  },
+
+  editContact(){
+    var that = this
+    var contactData = {community: that.data.community, contactObj: that.data.contactObj, _id: that.data._id}
+    wx.navigateTo({
+      url: '../editContact/editContact',
+      success: res => {
+        res.eventChannel.emit(
+          'contactData', {data: contactData}
+        )
+      }
     })
   },
 
@@ -47,11 +61,12 @@ Page({
       },
       success: res => {
         console.log(res)
+        that.setData({
+          contactObj: res.result.data.contact,
+          _id: res.result.data._id
+        })
         if (res.result.errCode == 0) {
           console.log(res.result)
-          that.setData({
-            contactObj: res.result.data
-          })
         } else if(res.result.errCode == 1) {
           wx.showModal({
             title: '目前还没有常用联系',
@@ -74,9 +89,6 @@ Page({
         })
       }
     })
-    //
-
-
   },
 
   /**
@@ -90,7 +102,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    if (app.globalData.contactUpdated == true){
+      app.globalData.contactUpdated = false
+      that.onLoad()
+    }
   },
 
   /**

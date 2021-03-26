@@ -8,7 +8,7 @@ exports.main = async (event, context) => {
 
   // 实例化数据库
   const db = cloud.database()
-  var result = {}
+  var result = {data: {contact: {}, _id: ''}}
   await db.collection('community')
   .where({
     name: event.community
@@ -17,9 +17,9 @@ exports.main = async (event, context) => {
   .then(res => {
     console.log('已完成搜索')
     console.log(res.data)
-    result.data = res.data[0].contact
-
-    if (result.data == undefined){
+    result.data.contact = res.data[0].contact
+    result.data._id = res.data[0]._id
+    if (JSON.stringify(res.data[0].contact) === '{}'){
       result.errCode = 1
       result.errMsg = '未找到结果'
     }else{

@@ -19,7 +19,8 @@ App({
       userInfo: null,
       userInfoUpdated: false,
       announcementUpdated: false,
-      voteUpdated: false
+      voteUpdated: false,
+      contactUpdated: false
     }
   }
 })

@@ -21,6 +21,10 @@
 
   </view>
 
+  <view class="line-button">
+      <button class="submit" bindtap="submitClick">确认修改</button>
+  </view>
+
 
   </view>
 

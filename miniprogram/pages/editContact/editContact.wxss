@@ -95,3 +95,21 @@ input {
 .numberInputSection{
   width: 40rpx;
 }
+
+.line-button{
+  margin-top: 40rpx;
+  padding-bottom: 80rpx;
+}
+
+.submit{
+  background-color: #437dd4;
+  color: white;
+  font-size: 33rpx;
+  border-radius: 20rpx;
+  width:90%;
+  height:100rpx;
+  line-height:100rpx;
+  margin-left:5%;
+  margin-right:5%;
+  padding:0rpx;
+}
