@@ -15,6 +15,7 @@
     <view class='cellGroupFrame'>
       <van-cell-group title='管理员选项'>
         <van-cell title="发布新通知" is-link size="large" bindtap="onTapAddAnnouncement"/>
+        <van-cell title="管理报修" is-link size="large" bindtap="onTapAddAnnouncement"/>
       </van-cell-group>
     </view>
   </view>

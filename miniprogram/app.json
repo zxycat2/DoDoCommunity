@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/report/report",
+    "pages/addReport/addReport",
     "pages/front/front",
     "pages/editContact/editContact",
     "pages/contact/contact",
@@ -18,7 +20,7 @@
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#437dd4",
-    "navigationBarTitleText": "渡渡鸟社区",
+    "navigationBarTitleText": "渡渡鸟家园",
     "navigationBarTextStyle": "white"
   },
   "sitemapLocation": "sitemap.json",

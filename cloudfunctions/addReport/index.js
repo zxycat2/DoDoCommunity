@@ -3,8 +3,6 @@ const cloud = require('wx-server-sdk')
 
 cloud.init()
 
-const md5 = require('./md5.js')
-
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
@@ -13,32 +11,40 @@ exports.main = async (event, context) => {
 
   var add_result = {}
 
-  if (event.name && event.code){
+  if (event.community && event.address && event.phone){
     // 构造要添加的数据
     to_add_data = {
-      name: event.name,
-      code: md5.md5(event.code),
-      contact: {}
+      time: new Date(),
+      community: event.community,
+      content: event.content,
+      imgSrc: event.imgSrc,
+      type: event.type,
+      address: event.address,
+      phone: event.phone,
+      subscribed: event.subscribed,
+      openid: event.openid
     }
 
-    console.log('新增社区')
+    console.log('新增报修')
     console.log(to_add_data)
 
-    await db.collection('community')
+    await db.collection('report')
     .add({
       data: to_add_data
     })
     .then(res => {
-      console.log('新增社区成功')
+      console.log('新增报修成功')
       console.log(res)
       // 集合中该数据被赋值的_id
       add_result.resID = res._id
-      add_result.errMsg = '新增社区成功'
+      add_result.errMsg = '新增报修成功'
       add_result.errNumber = 0
     })
   }else{
-    add_result.errMsg = '新增社区失败,必要参数不足'
+    add_result.errMsg = '新增报修失败,必要参数不足'
       add_result.errNumber = 1
   }
   return add_result
 }
+
+

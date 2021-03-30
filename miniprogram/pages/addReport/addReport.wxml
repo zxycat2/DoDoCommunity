@@ -1,0 +1,36 @@
+
+
+<view class="addReportPage">
+  <scroll-view class="outerFrame" scroll-y="true" enable-flex="true">
+
+    <view class="typePickerSection">
+      <picker bindchange="bindPickerChange" value="{{typeListIndex}}" range="{{typeList}}">
+        <view>
+          当前选择类别：{{typeList[typeListIndex]}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="line-block">
+      <view class="line-txt">门牌号：</view>
+      <input class="line-select" bindinput="bindKeyInputAddress" />
+    </view>
+
+    <view class="line-block">
+      <view class="line-txt">电话：</view>
+      <input class="line-select" bindinput="bindKeyInputPhone" />
+    </view>
+
+    <textarea placeholder="问题描述..." placeholder-style="color: #949494" class="content" bindinput="bindTextAreaInputContent" maxlength='-1'> </textarea>
+
+    <view class="line-block" style="flex-direction:column;">
+      <view class="upload-txt" bindtap="doUpload">上传图片（可选）</view>
+      <image class="upload-image" mode='widthFix' wx:if="{{isShowPic}}" src="{{imgSrc}}"></image>
+    </view>
+
+    <view class="line-button">
+      <button class="submit" bindtap="submit">提交报修</button>
+    </view>
+
+  </scroll-view>
+</view>

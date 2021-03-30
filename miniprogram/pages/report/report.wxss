@@ -1,0 +1,46 @@
+
+
+.announcementPage{
+  width: 100%;
+  height: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+}
+
+.outerFrame{
+  margin: 5%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+
+  height: 90%;
+  width: 90%;
+
+  border: 8rpx solid #437dd4;
+  border-radius: 30rpx;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+}
+
+.typePickerSection{
+  background-color:  #eaf0fb;
+  color:  #437dd4;
+  font-size: 33rpx;
+  border-radius: 20rpx;
+  width:60%;
+  height:100rpx;
+  line-height:100rpx;
+  margin: 30rpx;
+  padding:10rpx;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
