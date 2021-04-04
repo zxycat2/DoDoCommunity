@@ -15,9 +15,19 @@ Page({
     _id: '',
 
     is_admin: false,
-    hideDeleteButton: true,
+    hideAdminOption: true,
+    top: false,
 
     hidePhoto: false
+  },
+
+  onSwitchChange(e){
+    var that = this
+    var current = that.data.top
+    that.setData({
+      single: !current
+    })
+    console.log('switch change', that.data.single)
   },
 
   //图片预览
@@ -39,7 +49,7 @@ Page({
     console.log(that.data.is_admin)
     if (that.data.is_admin == true){
       that.setData({
-        hideDeleteButton: false
+        hideAdminOption: false
       })
     }
     const eventChannel = this.getOpenerEventChannel()

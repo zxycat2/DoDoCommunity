@@ -1,0 +1,35 @@
+.aboutPage{
+  width: 100%;
+  height: 100%;
+}
+
+
+.outerFrame{
+  margin: 15%;
+
+  /* border: 8rpx solid #437dd4;
+  border-radius: 30rpx;
+  background-color: white; */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dodoIcon{
+  height:230rpx;
+  width: 230rpx;
+  margin-left: 30rpx;
+  border-radius: 50%;
+}
+
+.pageText{
+  width: 100%;
+
+  margin-top: 15%;
+  color: #636363;
+  font-size: large;
+
+  white-space:pre-wrap
+}

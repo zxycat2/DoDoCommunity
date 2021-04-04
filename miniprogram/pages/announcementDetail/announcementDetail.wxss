@@ -47,4 +47,37 @@
 .deleteButton{
   margin-top: 5%;
   flex-shrink: 0;
+
+  background-color: #EE4000;
+  color: white;
+}
+
+.adminSection{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 40rpx;
+
+  border-radius: 30rpx;
+  background-color: #EAF0FB;
+
+  padding: 40rpx;
+}
+
+.swiucthSection{
+  margin-left: 40rpx;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.itemSet{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }

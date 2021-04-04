@@ -9,7 +9,18 @@
     <view class="photoFrame" hidden="{{showPhoto}}">
       <image src="{{imgSrc}}" mode="aspectFit" class="photo" bindtap="preview"></image>
     </view>
-    <button type="warn" class="deleteButton" hidden="{{hideDeleteButton}}" bindtap="onTapDelete">删除此公告</button>
+
+    <view class="adminSection" hidden="{{hideAdminOption}}">
+      <view>管理员选项</view>
+      <view class="itemSet">
+        <button class="deleteButton"  bindtap="onTapDelete">删除此公告</button>
+        <view class="swiucthSection">
+          <view>置顶</view>
+          <switch checked="{{top}}" bindchange="onSwitchChange"/>
+        </view>
+      </view>
+    </view>
+    
 
   </scroll-view>
 </view>

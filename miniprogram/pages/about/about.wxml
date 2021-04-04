@@ -1,0 +1,16 @@
+<view class='aboutPage'>
+
+<view class='outerFrame'>
+  <image class="dodoIcon" src='{{iconURL}}' mode="scaleToFill"></image>
+  <text class="pageText">
+      渡渡鸟社区是一款开源的社区服务小程序，致力于为各个小区的居民和物业管理者们提供一个纯净的、便捷的交流管理的平台与工具。
+      如果您对于小程序本身有什么想法意见，或者希望所在小区能使用本应用，欢迎与我联系：dodo@sina.cn
+      小程序源代码请于Github搜索：DoDoCommunity
+
+      感谢您的使用
+      开发者：渡渡鸟 2020
+  </text>
+</view>
+
+
+</view>

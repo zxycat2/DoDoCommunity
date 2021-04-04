@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/front/front",
+    "pages/about/about",
     "pages/report/report",
     "pages/reportDetail/reportDetail",
     "pages/addReport/addReport",
