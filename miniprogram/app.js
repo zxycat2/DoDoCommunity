@@ -20,7 +20,8 @@ App({
       userInfoUpdated: false,
       announcementUpdated: false,
       voteUpdated: false,
-      contactUpdated: false
+      contactUpdated: false,
+      reportUpdated: false
     }
   }
 })

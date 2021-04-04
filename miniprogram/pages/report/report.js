@@ -1,26 +1,28 @@
 const app = getApp()
 
-// miniprogram/pages/announcement.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    typeList: ['供暖设备', '水管', '电路', '网络', '燃气', '其他'],
+    typeList: ['全部', '供暖设备', '水管', '电路', '网络', '燃气', '其他'],
     typeListIndex: 0,
-    community: '',
-    allAnnouncement: [],
+    community: '渡渡鸟社区1',
+    originalAllReport: [],
+    allReport: [],
 
     dataArray: [],
     refreshing: false
   },
 
   bindPickerChange: function(e) {
+    var that = this
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       typeListIndex: e.detail.value
     })
+    that.loadInitData()
   },
 
   //点击进入详情
@@ -31,14 +33,13 @@ Page({
     var entrySetIndex = event.currentTarget.dataset.entrysetindex
     var detailData = that.data.dataArray[dataArrayIndex][entrySetIndex]
     wx.navigateTo({
-      url: '../announcementDetail/announcementDetail',
+      url: '../reportDetail/reportDetail',
       success: res => {
         res.eventChannel.emit(
           'detailData', {data: detailData}
         )
       }
     })
-
   },
 
   //分页加载相关，一次加载十条数据
@@ -50,8 +51,9 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
+    that.data.allReport = []
     wx.cloud.callFunction({
-      name: 'getAnnouncement',
+      name: 'getReport',
       data: {
         community: that.data.community
       },
@@ -59,10 +61,11 @@ Page({
         console.log(res)
         if (res.result.errCode == 0) {
           console.log(res.result)
-          app.globalData.allAnnouncement = res.result.data
+          that.data.originalAllReport = res.result.data.reverse()
+          console.log('从服务器下载数据', that.data)
         } else if(res.result.errCode == 1) {
           wx.showModal({
-            title: '暂时还没有通知哦',
+            title: '暂时还没有投票哦',
             confirmText: "我知道了",
             showCancel: false,
           })
@@ -80,7 +83,7 @@ Page({
         wx.hideLoading({
           success: (res) => {},
         })
-        that.onLoad()
+        that.loadInitData()
         that.setData({
           refreshing: false
         })
@@ -88,13 +91,13 @@ Page({
     })
   },
 
-  //截取allAccouncement
+  //截取allReport
   getSlicedData(currentPage){
     var that = this
     var result = []
     var start = currentPage * 10
     var end = (currentPage * 10) + 10
-    result = app.globalData.allAnnouncement.slice(start, end)
+    result = that.data.allReport.slice(start, end)
     console.log('开始执行切片')
     console.log('currentPage', currentPage)
     console.log('start', start)
@@ -110,8 +113,19 @@ Page({
     var currentPage = 0
     // 刷新时，清空dataArray，防止新数据与原数据冲突
     that.setData({
+      allReport: [],
       dataArray: []
     })
+    //根据分类处理数据
+    if (that.data.typeList[that.data.typeListIndex] == '全部'){
+      that.data.allReport = that.data.originalAllReport
+    }else{
+      for (var key in that.data.originalAllReport){
+        if (that.data.originalAllReport[key].type == that.data.typeList[that.data.typeListIndex]){
+          that.data.allReport.push(that.data.originalAllReport[key])
+        }
+      }
+    }
     // 获得初始数据
     var entrySet = that.getSlicedData(currentPage)
     var totalDataCount = entrySet.length;
@@ -164,8 +178,8 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    that.data.community = app.globalData.userInfo.community
-    that.loadInitData()
+    // that.data.community = app.globalData.userInfo.community
+    that.onRefresh()
   },
 
   /**
@@ -180,8 +194,8 @@ Page({
    */
   onShow: function () {
     var that = this
-    if (app.globalData.announcementUpdated == true){
-      app.globalData.announcementUpdated = false
+    if (app.globalData.reportUpdated == true){
+      app.globalData.reportUpdated = false
       that.onRefresh()
     }
   },

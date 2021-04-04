@@ -32,6 +32,12 @@ Page({
       }
     })
   },
+  //管路报修
+  onTapManageReport(){
+    wx.navigateTo({
+      url: '../report/report',
+    })
+  },
   //更改用户名
   onTapChangeUserName (e){
     var that = this

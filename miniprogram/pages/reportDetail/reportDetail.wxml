@@ -1,0 +1,31 @@
+<!--miniprogram/pages/announcementDetail.wxml-->
+
+<view class="reportDetailPage">
+  <scroll-view class="outerFrame" scroll-y="true" enable-flex="true">
+
+    <view class='cellGroupFrame'>
+      <van-cell-group title='报修信息'>
+        <van-cell title="报修类型" value="{{type}}" size="large"/>
+        <van-cell title="时间" value="{{time}}" size="large"/>
+        <van-cell title="地址" value="{{address}}" size="large"/>
+        <van-cell title="联系方式" value="{{phone}}" is-link size="large" bindtap="onTapPhone"/>
+      </van-cell-group>
+    </view>
+    
+    <text class="content" space="emsp" user-select="true" hidden="{{showContent}}">内容详情：{{content}}</text>
+    <view class="photoFrame" hidden="{{showPhoto}}">
+      <image src="{{imgSrc}}" mode="aspectFit" class="photo" bindtap="preview"></image>
+    </view>
+    <button type="warn" class="deleteButton" hidden="{{hideDeleteButton}}" bindtap="onTapDelete">完成并删除</button>
+
+  </scroll-view>
+</view>
+
+<!-- 弹出输入 -->
+<van-popup show="{{ showPopup }}" bind:close="onClose" position='top' custom-style="height: 30%;border: 8rpx solid #437dd4" round>
+    <view class='remarkSection'>
+        <view class='remarkTitle'>请输入服务描述</view>
+        <input class="weui-input inputSection" type="text" placeholder="已完成维修" value='{{remarkInputValue}}' bindinput='bindKeyInput'/>
+        <button type="primary" class="confirmButtton" bindtap="confirmRemark">确认</button>
+    </view>
+</van-popup>

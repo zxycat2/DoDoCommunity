@@ -49,7 +49,7 @@ Page({
         console.log(res)
         if (res.result.errCode == 0) {
           console.log(res.result)
-          app.globalData.allAnnouncement = res.result.data
+          app.globalData.allAnnouncement = res.result.data.reverse()
         } else if(res.result.errCode == 1) {
           wx.showModal({
             title: '暂时还没有通知哦',

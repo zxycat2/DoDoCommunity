@@ -1,0 +1,69 @@
+/* miniprogram/pages/announcementDetail.wxss */
+
+.reportDetailPage{
+  width: 100%;
+  height: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+}
+
+.outerFrame{
+  margin: 5%;
+  padding: 5%;
+
+  height: 90%;
+  width: 80%;
+
+  border: 8rpx solid #437dd4;
+  border-radius: 30rpx;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+}
+
+.content{
+  margin-top: 20rpx;
+  font-size: 35rpx;
+}
+
+.photoFrame{
+  margin-top: 3%;
+}
+
+.deleteButton{
+  margin-top: 5%;
+  flex-shrink: 0;
+}
+
+.cellGroupFrame{
+  width: 100%;
+  padding: 30rpx;
+
+}
+
+.remarkSection{
+  margin: 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.remarkTitle{
+  margin-top: 10rpx;
+  font-size: 40rpx;
+}
+
+.inputSection{
+  margin-top: 30rpx;
+}
+
+.confirmButtton{
+  margin-top: 40rpx;
+}

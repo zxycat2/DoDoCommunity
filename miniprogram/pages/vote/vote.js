@@ -50,7 +50,7 @@ Page({
         console.log(res)
         if (res.result.errCode == 0) {
           console.log(res.result)
-          that.data.allVote = res.result.data
+          that.data.allVote = res.result.data.reverse()
           console.log('从服务器下载数据', that.data)
         } else if(res.result.errCode == 1) {
           wx.showModal({

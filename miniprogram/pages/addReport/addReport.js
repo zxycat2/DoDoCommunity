@@ -14,7 +14,7 @@ Page({
     community: '渡渡鸟社区1',
     address: '',
     phone: '',
-    openid: '22222222',
+    openid: '',
     subscribed: false,
     imgSrc: ''
 
@@ -183,8 +183,8 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    // that.data.community = app.globalData.userInfo.community
-    // that.data.openid = app.globalData.userInfo.openid
+    that.data.community = app.globalData.userInfo.community
+    that.data.openid = app.globalData.userInfo.openid
   },
 
   /**

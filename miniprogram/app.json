@@ -1,8 +1,9 @@
 {
   "pages": [
-    "pages/report/report",
-    "pages/addReport/addReport",
     "pages/front/front",
+    "pages/report/report",
+    "pages/reportDetail/reportDetail",
+    "pages/addReport/addReport",
     "pages/editContact/editContact",
     "pages/contact/contact",
     "pages/voteDetail/voteDetail",

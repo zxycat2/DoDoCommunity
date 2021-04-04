@@ -18,7 +18,7 @@
       	<block wx:for="{{entrySet}}" wx:for-item="entry" wx:for-index="entrySetindex">
 					<view class="weui-panel__bd" bindtap="tapEntry" data-dataArrayIndex='{{dataArrayIndex}}' data-entrySetindex='{{entrySetindex}}'>
 						<view class="weui-media-box weui-media-box_text">
-							<h4 class="weui-media-box__title">{{dataArray[dataArrayIndex][entrySetindex].title}}</h4>
+							<h4 class="weui-media-box__title">{{dataArray[dataArrayIndex][entrySetindex].address}}</h4>
 							<view class="weui-media-box__desc">{{dataArray[dataArrayIndex][entrySetindex].content}}</view>
 						</view>
 					</view>
