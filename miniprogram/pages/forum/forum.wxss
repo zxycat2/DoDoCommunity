@@ -1,1 +1,45 @@
-/* miniprogram/pages/forum.wxss */
+.forumPage{
+  width: 100%;
+  height: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+}
+
+.outerFrame{
+  margin: 5%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+
+  height: 90%;
+  width: 90%;
+
+  border: 8rpx solid #437dd4;
+  border-radius: 30rpx;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+}
+
+.postSection{
+  border: 8rpx solid #437dd4;
+  border-radius: 30rpx;
+  background-color: #EAF0FB;
+
+  margin: 20rpx;
+  padding: 20rpx;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+}
+
+.contentSection{
+  font-size: 40rpx;
+}

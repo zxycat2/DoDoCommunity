@@ -1,2 +1,19 @@
-<!--miniprogram/pages/forum.wxml-->
-<text>miniprogram/pages/forum.wxml</text>
+<view class='forumPagePage'>
+  <scroll-view class='outerFrame' scroll-y='true' enable-back-to-top='true' bindscrolltolower='loadMoreData' refresher-triggered='{{refreshing}}' refresher-enabled='true' bindrefresherrefresh='onRefresh'>
+
+    <block wx:for="{{dataArray}}" wx:for-item="entrySet" wx:for-index="dataArrayIndex">
+      	<block wx:for="{{entrySet}}" wx:for-item="entry" wx:for-index="entrySetindex">
+
+          <view class="postSection" data-dataArrayIndex='{{dataArrayIndex}}' data-entrySetindex='{{entrySetindex}}'>
+            <text class="contentSection" space="emsp" user-select="true">{{dataArray[dataArrayIndex][entrySetindex].content}}</text>
+            <view>
+              作者:{{dataArray[dataArrayIndex][entrySetindex].content}} 日期:{{dataArray[dataArrayIndex][entrySetindex].date}}
+            </view>
+          </view>
+          
+      	</block>
+    	</block>
+
+
+  </scroll-view>
+</view>

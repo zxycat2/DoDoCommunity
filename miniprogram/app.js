@@ -21,7 +21,8 @@ App({
       announcementUpdated: false,
       voteUpdated: false,
       contactUpdated: false,
-      reportUpdated: false
+      reportUpdated: false,
+      postUpdated: false
     }
   }
 })

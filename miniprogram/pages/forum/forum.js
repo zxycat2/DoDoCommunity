@@ -1,18 +1,156 @@
-// miniprogram/pages/forum.js
+const app = getApp()
+const util = require('../../utils/util');
+// miniprogram/pages/announcement.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    community: '渡渡鸟社区1',
+    allPost: [],
 
+    dataArray: [],
+    refreshing: false
   },
+
+  //分页加载相关，一次加载十条数据
+
+  //下拉刷新
+  onRefresh(){
+    var that = this
+    //重新下载全局变量
+    wx.showLoading({
+      title: '加载中',
+    })
+    that.data.allPost = []
+    wx.cloud.callFunction({
+      name: 'getPost',
+      data: {
+        community: that.data.community
+      },
+      success: res => {
+        console.log(res)
+        if (res.result.errCode == 0) {
+          console.log(res.result)
+          that.data.allPost = res.result.data.reverse()
+          //格式化显示日期
+          for (var key in that.data.allPost){
+            that.data.allPost[key].date = util.formatDate(new Date(that.data.allPost[key].date), 'yyyy-mm-dd')
+          }
+          console.log('从服务器下载数据', that.data)
+        } else if(res.result.errCode == 1) {
+          wx.showModal({
+            title: '暂时还没有投票哦',
+            confirmText: "我知道了",
+            showCancel: false,
+          })
+        }
+      },
+      fail: err => {
+        console.error('[云函数] [wechat_sign] 调用失败', err)
+        wx.showModal({
+          title: '调用失败',
+          content: '请检查云函数是否已部署',
+          showCancel: false,
+        })
+      },
+      complete: err => {
+        wx.hideLoading({
+          success: (res) => {},
+        })
+        that.loadInitData()
+        that.setData({
+          refreshing: false
+        })
+      }
+    })
+  },
+
+  //截取allPost
+  getSlicedData(currentPage){
+    var that = this
+    var result = []
+    var start = currentPage * 10
+    var end = (currentPage * 10) + 10
+    result = that.data.allPost.slice(start, end)
+    console.log('开始执行切片')
+    console.log('currentPage', currentPage)
+    console.log('start', start)
+    console.log('end',end)
+    console.log('result', result)
+    return result
+  },
+
+  //初始输入载入，刷新时也调用
+  loadInitData: function () {
+    console.log('初始数据加载')
+    var that = this
+    var currentPage = 0
+    // 刷新时，清空dataArray，防止新数据与原数据冲突
+    that.setData({
+      dataArray: []
+    })
+    // 获得初始数据
+    var entrySet = that.getSlicedData(currentPage)
+    var totalDataCount = entrySet.length;
+    // setData刷新前端页面
+    that.setData({
+      ["dataArray["+currentPage+"]"]: entrySet,
+      currentPage: currentPage,
+      totalDataCount: totalDataCount
+    })
+    console.log('当前dataArray：')
+    console.log(that.data.dataArray)
+  },
+
+  /**
+   * 加载下一页数据
+   */
+  loadMoreData: function () {
+    console.log('加载更多数据')
+    var that = this
+    var currentPage = that.data.currentPage; // 获取当前页码
+    currentPage += 1; // 加载当前页面的下一页数据
+    
+    var entrySet = that.getSlicedData(currentPage)
+
+    if (entrySet.length == 0){
+      console.log('已经没有了')
+    }else{
+      console.log('添加数据')
+      // 计算当前共加载了多少条数据，来证明这种方式可以加载更多数据
+      var totalDataCount = that.data.totalDataCount;
+      totalDataCount = totalDataCount + entrySet.length;
+          
+      // 直接将新一页的数据添加到数组里
+      that.setData({
+        ["dataArray[" + currentPage + "]"]: entrySet,
+        currentPage: currentPage,
+        totalDataCount: totalDataCount
+      })
+    }
+    console.log('当前dataArray：')
+    console.log(that.data.dataArray)
+    
+  },
+
+  postNewVote(e){
+    wx.navigateTo({
+      url: '../addVote/addVote',
+    })
+  },
+
+  
+
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that = this
+    // that.data.community = app.globalData.userInfo.community
+    that.onRefresh()
   },
 
   /**
@@ -26,7 +164,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    if (app.globalData.postUpdated == true){
+      app.globalData.postUpdated = false
+      that.onRefresh()
+    }
   },
 
   /**
@@ -64,3 +206,4 @@ Page({
 
   }
 })
+
