@@ -51,6 +51,15 @@ Page({
         if (res.result.errCode == 0) {
           console.log(res.result)
           that.data.allVote = res.result.data.reverse()
+                    //处理置顶
+                    for (var i = 0; i < that.data.allVote.length; i++) {
+                      if (that.data.allVote[i].top === true) {
+                        var topElement = that.data.allVote[i]
+                        that.data.allVote.splice(i, 1) // 如果数据组存在该元素，则把该元素删除
+                        that.data.allVote.unshift(topElement); // 再添加到第一个位置
+                          continue
+                      }
+                    }
           console.log('从服务器下载数据', that.data)
         } else if(res.result.errCode == 1) {
           wx.showModal({

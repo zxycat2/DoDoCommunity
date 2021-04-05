@@ -23,7 +23,8 @@ exports.main = async (event, context) => {
       single: event.single,
       votedUser: [],
       endDate: event.endDate,
-      creator: event.creator
+      creator: event.creator,
+      top: false
     }
 
     console.log('新增投票')

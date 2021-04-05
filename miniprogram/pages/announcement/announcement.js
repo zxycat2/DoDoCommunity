@@ -50,6 +50,15 @@ Page({
         if (res.result.errCode == 0) {
           console.log(res.result)
           app.globalData.allAnnouncement = res.result.data.reverse()
+          //处理置顶
+          for (var i = 0; i < app.globalData.allAnnouncement.length; i++) {
+            if (app.globalData.allAnnouncement[i].top === true) {
+              var topElement = app.globalData.allAnnouncement[i]
+              app.globalData.allAnnouncement.splice(i, 1) // 如果数据组存在该元素，则把该元素删除
+              app.globalData.allAnnouncement.unshift(topElement); // 再添加到第一个位置
+                continue
+            }
+          }
         } else if(res.result.errCode == 1) {
           wx.showModal({
             title: '暂时还没有通知哦',

@@ -62,6 +62,7 @@ Page({
         if (res.result.errCode == 0) {
           console.log(res.result)
           that.data.originalAllReport = res.result.data.reverse()
+          
           console.log('从服务器下载数据', that.data)
         } else if(res.result.errCode == 1) {
           wx.showModal({

@@ -26,8 +26,11 @@ Page({
 
     showPopup: false,
     focus: false,
-    remarkInputValue: '已完成维修'
+    remarkInputValue: '已完成维修',
+
   },
+
+
   //弹出输入相关
   bindKeyInput: function (e) {
     this.setData({
@@ -175,7 +178,8 @@ Page({
           time: util.formatDate(new Date(data.data.time), 'yyyy-mm-dd hh:mi'),
           content: data.data.content,
           imgSrc: data.data.imgSrc,
-          _id: data.data._id
+          _id: data.data._id,
+          top: data.data.top
         })
         if (that.data.content == ''){
           that.setData({

@@ -106,10 +106,20 @@ Page({
               console.log(res)
               if (res.result.errCode == 0) {
                 console.log(res.result)
-                app.globalData.allAnnouncement = res.result.data
+                app.globalData.allAnnouncement = res.result.data.reverse()
+                          //处理置顶
+          for (var i = 0; i < app.globalData.allAnnouncement.length; i++) {
+            if (app.globalData.allAnnouncement[i].top == true) {
+              console.log('top true')
+              var topElement = app.globalData.allAnnouncement[i]
+              app.globalData.allAnnouncement.splice(i, 1) // 如果数据组存在该元素，则把该元素删除
+              app.globalData.allAnnouncement.unshift(topElement); // 再添加到第一个位置
+                continue
+            }
+          }
                 that.setData({
-                  firstAnnTitle: app.globalData.allAnnouncement[app.globalData.allAnnouncement.length - 1].title,
-                  firstAnnContent: app.globalData.allAnnouncement[app.globalData.allAnnouncement.length - 1].content
+                  firstAnnTitle: app.globalData.allAnnouncement[0].title,
+                  firstAnnContent: app.globalData.allAnnouncement[0].content
                 })
               } else if(res.result.errCode == 1) {
                 that.setData({

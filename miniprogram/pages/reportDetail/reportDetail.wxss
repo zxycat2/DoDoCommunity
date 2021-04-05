@@ -36,10 +36,6 @@
   margin-top: 3%;
 }
 
-.deleteButton{
-  margin-top: 5%;
-  flex-shrink: 0;
-}
 
 .cellGroupFrame{
   width: 100%;
@@ -66,4 +62,17 @@
 
 .confirmButtton{
   margin-top: 40rpx;
+}
+
+.deleteButton{
+  margin-top: 5%;
+  flex-shrink: 0;
+
+  background-color: #EE4000;
+  color: white;
+}
+
+.description{
+  font-size: 35rpx;
+  margin-top: 20rpx;
 }

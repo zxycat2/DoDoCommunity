@@ -59,6 +59,7 @@
   align-items: center;
 
   margin-bottom: 40rpx;
+  margin-top: 20rpx;
 
   border-radius: 30rpx;
   background-color: #EAF0FB;

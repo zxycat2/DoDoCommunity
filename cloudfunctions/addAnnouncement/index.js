@@ -18,7 +18,8 @@ exports.main = async (event, context) => {
       time: new Date(),
       community: event.community,
       content: event.content,
-      imgSrc: event.imgSrc
+      imgSrc: event.imgSrc,
+      top: false
     }
 
     console.log('新增通知')

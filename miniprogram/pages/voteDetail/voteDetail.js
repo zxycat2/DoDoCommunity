@@ -37,7 +37,72 @@ Page({
     // [{option: '选项1', percentage: 20, voteCount: 2},{option: '选项2', percentage: 30, voteCount: 3}, {option: '选项3', percentage: 10, voteCount: 1}]
 
     hideOptionSelect: false,
-    hideVoteResult: true
+    hideVoteResult: true,
+
+    newTitle: '',
+    top: false
+
+  },
+
+  onSwitchChange(e){
+    var that = this
+    var current = that.data.top
+    that.setData({
+      top: !current
+    })
+    that.data.newTitle = that.data.title
+    if (that.data.top == true){
+      that.data.newTitle = '[置顶]' + that.data.title
+    }else{
+      that.data.newTitle = that.data.title.slice(4)
+    }
+    console.log('new title:', that.data.newTitle)
+    console.log('switch change', that.data.top)
+    wx.showLoading({
+      title: '正在更新数据',
+    })
+    console.log(that.data)
+    wx.cloud.callFunction({
+      name: 'updateVoteTop',
+      data: {
+        _id: that.data._id,
+        top: that.data.top,
+        title: that.data.newTitle
+      },
+      success: res => {
+        if (res.result.errNumber == 0) {
+          console.log('云数据库新增公告成功')
+          app.globalData.voteUpdated = true
+          wx.showToast({
+            title: '更新成功',
+          })
+          that.setData({
+            title: that.data.newTitle
+          })
+        } else if(res.result.errCode == 1) {
+          wx.showModal({
+            title: '云数据库新增公告失败',
+            content: '请重试',
+            confirmText: "好的",
+            showCancel: false,
+          })
+        }
+      },
+      fail: err => {
+        console.error('[云函数] [wechat_sign] 调用失败', err)
+        wx.showModal({
+          title: '调用失败',
+          content: '请检查云函数是否已部署',
+          showCancel: false,
+        })
+      },
+      complete: err => {
+        console.log(err)
+        wx.hideLoading({
+          success: (res) => {},
+        })
+      }
+    })
 
   },
 
@@ -79,7 +144,8 @@ Page({
           options: data.data.options,
           single: data.data.single,
           votedUser: data.data.votedUser,
-          creator: data.data.creator
+          creator: data.data.creator,
+          top: data.data.top
         })
         if (that.data.imgSrc == ''){
           that.setData({
