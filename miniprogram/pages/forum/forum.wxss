@@ -13,7 +13,7 @@
   padding-top: 5%;
   padding-bottom: 5%;
 
-  height: 90%;
+  height: 900rpx;
   width: 90%;
 
   border: 8rpx solid #437dd4;
@@ -43,3 +43,104 @@
 .contentSection{
   font-size: 40rpx;
 }
+
+.postButton{
+  background-color: #437dd4;
+  color: white;
+  font-size: 33rpx;
+
+  margin-bottom:20rpx ;
+}
+
+.remarkSection{
+  margin: 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.remarkTitle{
+  margin-top: 10rpx;
+  font-size: 40rpx;
+}
+
+.contentTextArea{
+  margin-top: 30rpx;
+  height: 400rpx;
+  width: 450rpx;
+
+  padding: 20rpx;
+
+  flex-shrink: 0;
+
+  background-color: #EAF0FB;
+  border-radius: 30rpx;
+
+  font-size: 34rpx;
+}
+
+.confirmButtton{
+  margin-top: 40rpx;
+}
+
+.upload-txt{
+  width: 100%;
+  line-height: 100rpx;
+  text-align: center;
+  color: #437dd4;
+  font-size: 34rpx;
+}
+
+.upload-image{
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 10rpx;
+  margin-bottom: 20rpx;
+}
+
+.line-block{
+  width: 100%;
+  margin-top: 30rpx;
+  margin-left: 5%;
+  margin-right: 5%;
+  background-color: #eaf0fb;
+  border-radius: 20rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.anonymousSwitch{
+  margin-top: 20rpx;
+}
+
+.swicthSection{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.photo{
+  margin: 20rpx;
+
+  width: 500rpx;
+}
+
+.deleteButton{
+  margin-top:20rpx ;
+
+  background-color: #EE4000;
+  color: white;
+}
+
+.adminSwitchSection{
+
+  margin-bottom:20rpx ;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+

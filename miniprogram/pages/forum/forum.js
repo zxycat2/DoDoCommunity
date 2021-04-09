@@ -11,8 +11,285 @@ Page({
     allPost: [],
 
     dataArray: [],
-    refreshing: false
+    refreshing: false,
+
+    showPopup: false,
+    newPostContent: '',
+
+    anonymous: false,
+    nickName:'',
+    imgSrc: '',
+    showPhoto: false,
+
+    is_admin: false,
+
+    showDeleteButton: false
   },
+
+  checkContent(){
+    var that = this
+    var res = false
+    if (that.data.newPostContent != ''){
+      res = true
+    }
+    return res
+  },
+
+  onshowDeleteButtonSwitchChange(){
+    var that = this
+    var current = that.data.showDeleteButton
+    that.setData({
+      showDeleteButton: !current
+    })
+    console.log(that.data.anonymous)
+  },
+
+  onTapDelete(e){
+    var that = this
+    wx.showModal({
+      title: '您确定要删除该留言吗？',
+      content: '留言将会被永久删除',
+      success (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          wx.showLoading({
+            title: '正在删除',
+          })
+          console.log('e.c.d.imgSrc:', e.currentTarget.dataset)
+          wx.cloud.callFunction({
+            name: 'deletePost',
+            data: {
+              _id: e.currentTarget.dataset._id
+            },
+            success: res => {
+              if (res.result.errNumber == 0) {
+                if (e.currentTarget.dataset.imgsrc != undefined){
+                  wx.cloud.deleteFile({
+                    fileList: [e.currentTarget.dataset.imgsrc],
+                    success: res => {
+                      console.log('删除公告中的图片')
+                    },
+                    fail: console.error
+                  })
+                }
+                console.log('云数据库删除公告成功')
+                app.globalData.announcementUpdated = true
+                wx.showToast({
+                  title: '删除成功',
+                })
+                that.onRefresh()
+              } else if(res.result.errCode == 1) {
+                wx.showModal({
+                  title: '云数据库删除公告失败',
+                  content: '请重试',
+                  confirmText: "好的",
+                  showCancel: false,
+                })
+              }
+            },
+            fail: err => {
+              console.error('[云函数] [wechat_sign] 调用失败', err)
+              wx.showModal({
+                title: '调用失败',
+                content: '请检查云函数是否已部署',
+                showCancel: false,
+              })
+            },
+            complete: err => {
+              console.log(err)
+              wx.hideLoading({
+                success: (res) => {},
+              })
+            }
+          })
+
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+    
+  },
+
+  onAnonymousSwitchChange(){
+    var that = this
+    var current = that.data.anonymous
+    that.setData({
+      anonymous: !current
+    })
+    console.log(that.data.anonymous)
+  },
+
+
+  //弹出发布相关
+
+  // popup相关
+  showPopup() {
+    this.setData({ showPopup: true });
+  },
+  hidePopup() {
+    this.setData({ showPopup: false });
+  },
+
+  onClose() {
+    this.setData({ 
+      newPostContent: '',
+      imgSrc: '',
+      anonymous: false,
+      showPopup: false
+    });
+  },
+
+  postNewPost(){
+    var that = this
+    that.showPopup()
+  },
+
+  //发布
+  confirmPost(){
+    var that = this
+    if (that.checkContent() == true){
+      console.log('post')
+      var that = this
+      //处理数据
+      console.log('src:', that.data.imgSrc)
+      if (that.data.imgSrc == ''){
+        that.data.showPhoto = false
+      }else{
+        that.data.showPhoto = true
+      }
+      if (that.data.anonymous == true){
+        that.data.nickName = '匿名'
+      }else{
+        that.data.nickName = app.globalData.userInfo.nickName
+      }
+      //上传
+      wx.showLoading({
+        title: '正在上传数据',
+      })
+      console.log(that.data)
+      wx.cloud.callFunction({
+        name: 'addPost',
+        data: {
+          content: that.data.newPostContent,
+          imgSrc: that.data.imgSrc,
+          showPhoto: that.data.showPhoto,
+          community: that.data.community,
+          nickName: that.data.nickName
+        },
+        success: res => {
+          if (res.result.errNumber == 0) {
+            console.log('云数据库新增留言成功')
+            wx.showToast({
+              title: '上传成功',
+            })
+            that.hidePopup()
+            that.onRefresh()
+          } else if(res.result.errCode == 1) {
+            wx.showModal({
+              title: '云数据库新增留言失败',
+              content: '请重试',
+              confirmText: "好的",
+              showCancel: false,
+            })
+          }
+        },
+        fail: err => {
+          console.error('[云函数] [wechat_sign] 调用失败', err)
+          wx.showModal({
+            title: '调用失败',
+            content: '请检查云函数是否已部署',
+            showCancel: false,
+          })
+        },
+        complete: err => {
+          console.log(err)
+          this.setData({ 
+            newPostContent: '',
+            imgSrc: '',
+            anonymous: false
+          });
+          wx.hideLoading({
+            success: (res) => {},
+          })
+        }
+      })
+    }else{
+      wx.showModal({
+        title: '还差一步',
+        content: '内容不能为空',
+        confirmText: "我知道了",
+        showCancel: false,
+      })
+    }
+
+  },
+
+  preview(e){
+    var that = this
+    var urls = []
+    console.log('e:', e)
+    urls.push(e.currentTarget.dataset.imgsrc)
+    wx.previewImage({
+      urls: urls
+    })
+  },
+
+  //弹出输入相关
+
+  bindTextAreaInputContent: function(e) {
+    this.setData({
+      newPostContent: e.detail.value
+    })
+  },
+
+      // 上传图片
+      doUpload: function(e) {
+        var that = this
+        // 选择图片
+        wx.chooseImage({
+          count: 1,
+          sizeType: ['compressed'],
+          sourceType: ['album', 'camera'],
+          success: function(res) {
+            wx.showLoading({
+              title: '上传中',
+            })
+            const filePath = res.tempFilePaths[0]
+            // 上传图片
+            var timestamp = new Date().getTime()
+            const cloudPath = that.data.community + '/留言/' + timestamp + filePath.match(/\.[^.]+?$/)[0]
+            that.setData({
+              isShowPic: false,
+            })
+            wx.cloud.uploadFile({
+              cloudPath,
+              filePath,
+              success: res => {
+                console.log('[上传文件] 成功:', res)
+                that.setData({
+                  isShowPic: true,
+                  imgSrc: res.fileID,
+                  cloudPath: cloudPath,
+                })
+              },
+              fail: e => {
+                console.error('[上传文件] 失败:', e)
+                wx.showToast({
+                  icon: 'none',
+                  title: '上传失败',
+                })
+              },
+              complete: () => {
+                wx.hideLoading()
+              }
+            })
+          },
+          fail: e => {
+            console.error(e)
+          }
+        })
+      },
 
   //分页加载相关，一次加载十条数据
 
@@ -149,7 +426,10 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    // that.data.community = app.globalData.userInfo.community
+    that.setData({
+      community: app.globalData.userInfo.community,
+      is_admin: app.globalData.userInfo.is_admin
+    })
     that.onRefresh()
   },
 
