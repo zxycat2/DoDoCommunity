@@ -2,7 +2,7 @@
 
 <view class='loginPage'>
   <view class='outerFrame'>
-    <button class='userButton' open-type='getUserInfo' bindgetuserinfo='onGetUserInfo'>
+    <button class='userButton'  bindtap='getUserProfile'>
     <image class="userinfo-avatar" src='{{avatarUrl}}' mode="scaleToFill"></image>
     <view class='userName'>{{nickName}}</view>
     </button>

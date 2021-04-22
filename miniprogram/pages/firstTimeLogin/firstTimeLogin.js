@@ -15,19 +15,25 @@ Page({
     community: '选择您所在的小区',
     communityChosen: false
   },
-// 点击授权登录后，在获取信息后触发
-  onGetUserInfo:function(res){
-    if (res.detail.userInfo){
-      app.globalData.userInfo = res.detail.userInfo
-      this.setData({
-        userInfo: res.detail.userInfo,
-        nickName: res.detail.userInfo.nickName,
-        avatarUrl: res.detail.userInfo.avatarUrl,
-        logged: true
-      })
-      this.onGetOpenid()
-    }
+  //获取用户信息
+  getUserProfile(e){
+    wx.getUserProfile({
+      desc: '用于注册保存用户资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        if (res.userInfo){
+          app.globalData.userInfo = res.userInfo
+          this.setData({
+            userInfo: res.userInfo,
+            nickName: res.userInfo.nickName,
+            avatarUrl: res.userInfo.avatarUrl,
+            logged: true
+          })
+          this.onGetOpenid()
+        }
+      }
+    })
   },
+
 //调用云函数进行静默注册
 
   onGetOpenid: function() {
