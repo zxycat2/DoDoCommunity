@@ -24,9 +24,9 @@
 
   </scroll-view>
 
-  <view class="adminSwitchSection">
+  <view class="adminSwitchSection" hidden="{{!is_admin}}">
     <view>显示删除选项：</view>
-    <switch class='anonymousSwitch' checked="{{showDeleteButton}}" bindchange="onshowDeleteButtonSwitchChange" hidden="{{!is_admin}}"/>
+    <switch class='anonymousSwitch' checked="{{showDeleteButton}}" bindchange="onshowDeleteButtonSwitchChange"/>
   </view>
 
   <view>

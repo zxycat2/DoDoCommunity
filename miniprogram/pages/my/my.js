@@ -32,6 +32,12 @@ Page({
       }
     })
   },
+  //跳转到我的报修页面
+  onTapMyReport(e){
+    wx.navigateTo({
+      url: '../myReport/myReport',
+    })
+  },
   //管路报修
   onTapManageReport(){
     wx.navigateTo({

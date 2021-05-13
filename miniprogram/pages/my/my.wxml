@@ -7,6 +7,7 @@
         <van-cell title="头像" value="点击上传" is-link icon="{{avatarUrl}}" size="large" bindtap="onTapUploadeAvatar" />
         <van-cell title="用户名" value="{{nickName}}" is-link size="large" bindtap="onTapChangeUserName"/>
         <van-cell title="所在小区" value="{{community}}" is-link size="large" bindtap="onTapChangeCommunity"/>
+        <van-cell title="我的报修" value="{{myReport}}" is-link size="large" bindtap="onTapMyReport"/>
       </van-cell-group>
     </view>
   </view>

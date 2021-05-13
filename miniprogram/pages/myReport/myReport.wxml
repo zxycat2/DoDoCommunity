@@ -1,0 +1,24 @@
+<!--miniprogram/pages/announcement.wxml-->
+
+<view class='myReport'>
+  <scroll-view class='outerFrame' scroll-y='true' enable-back-to-top='true' bindscrolltolower='loadMoreData' refresher-triggered='{{refreshing}}' refresher-enabled='true' bindrefresherrefresh='onRefresh'>
+
+  <view class="weui-panel weui-panel_access">
+			<view class="weui-panel__hd">我的报修</view>
+
+			<block wx:for="{{dataArray}}" wx:for-item="entrySet" wx:for-index="dataArrayIndex">
+      	<block wx:for="{{entrySet}}" wx:for-item="entry" wx:for-index="entrySetindex">
+					<view class="weui-panel__bd" bindtap="tapEntry" data-dataArrayIndex='{{dataArrayIndex}}' data-entrySetindex='{{entrySetindex}}'>
+						<view class="weui-media-box weui-media-box_text">
+							<h4 class="weui-media-box__title">{{dataArray[dataArrayIndex][entrySetindex].type}}</h4>
+							<view class="weui-media-box__desc">{{dataArray[dataArrayIndex][entrySetindex].time}}</view>
+						</view>
+					</view>
+      	</block>
+    	</block>
+
+		</view>
+
+
+  </scroll-view>
+</view>

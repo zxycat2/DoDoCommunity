@@ -21,7 +21,7 @@ Page({
     creator: '',
 
     is_admin: false,
-    hideDeleteButton: true,
+    hideAdminOption: true,
 
     hidePhoto: false,
 
@@ -127,7 +127,7 @@ Page({
     console.log(that.data.is_admin)
     if (that.data.is_admin == true){
       that.setData({
-        hideDeleteButton: false
+        hideAdminOption: false
       })
     }
     const eventChannel = this.getOpenerEventChannel()
@@ -192,6 +192,7 @@ Page({
       var item = {option: key, voteCount: that.data.options[key], percentage: parseInt((that.data.options[key] / allVoteCount)*100)}
       newVotePercentage.push(item)
     }
+    //待做：添加修复百分比显示null
     that.setData({
       votePercentage: newVotePercentage
     })
